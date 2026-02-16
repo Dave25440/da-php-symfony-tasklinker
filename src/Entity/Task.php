@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\TaskStatus;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +25,7 @@ class Task
     private ?\DateTimeImmutable $deadline = null;
 
     #[ORM\Column(name: 'status', length: 255)]
-    private ?string $status = null;
+    private ?TaskStatus $status = null;
 
     public function getId(): ?int
     {
@@ -67,12 +68,12 @@ class Task
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?TaskStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(TaskStatus $status): static
     {
         $this->status = $status;
 
