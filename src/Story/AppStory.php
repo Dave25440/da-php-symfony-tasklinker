@@ -2,6 +2,9 @@
 
 namespace App\Story;
 
+use App\Factory\EmployeeFactory;
+use App\Factory\ProjectFactory;
+use App\Factory\TaskFactory;
 use Zenstruck\Foundry\Attribute\AsFixture;
 use Zenstruck\Foundry\Story;
 
@@ -10,6 +13,8 @@ final class AppStory extends Story
 {
     public function build(): void
     {
-        // SomeFactory::createOne();
+        ProjectFactory::createMany(2);
+        EmployeeFactory::createMany(3);
+        TaskFactory::createMany(8);
     }
 }
