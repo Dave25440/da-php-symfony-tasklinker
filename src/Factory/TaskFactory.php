@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Factory;
+
+use App\Entity\Task;
+use App\Enum\TaskStatus;
+use App\Repository\TaskRepository;
+use Doctrine\ORM\EntityRepository;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
+use Zenstruck\Foundry\Persistence\Proxy;
+use Zenstruck\Foundry\Persistence\ProxyRepositoryDecorator;
+
+/**
+ * @extends PersistentObjectFactory<Task>
+ */
+final class TaskFactory extends PersistentObjectFactory{
+    /**
+     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
+     *
+     * @todo inject services if required
+     */
+    public function __construct()
+    {
+    }
+
+    #[\Override]    public static function class(): string
+    {
+        return Task::class;
+    }
+
+        /**
+     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
+     *
+     * @todo add your default values here
+     */
+    #[\Override]    protected function defaults(): array|callable    {
+        return [
+            'deadline' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'description' => self::faker()->text(100),
+            'employee' => EmployeeFactory::random(),
+            'project' => ProjectFactory::random(),
+            'status' => self::faker()->randomElement(TaskStatus::cases()),
+            'title' => self::faker()->unique()->sentence(),
+        ];
+    }
+
+        /**
+     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
+     */
+    #[\Override]    protected function initialize(): static
+    {
+        return $this
+            // ->afterInstantiate(function(Task $task): void {})
+        ;
+    }
+}
