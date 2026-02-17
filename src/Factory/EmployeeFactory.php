@@ -37,7 +37,7 @@ final class EmployeeFactory extends PersistentObjectFactory{
             'email' => self::faker()->unique()->email(),
             'firstname' => self::faker()->firstName(),
             'lastname' => self::faker()->lastName(),
-            'projects' => ProjectFactory::randomSet(self::faker()->numberBetween(0, 2)),
+            'projects' => ProjectFactory::randomSet(self::faker()->numberBetween(1, 2)),
             'start' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'status' => self::faker()->randomElement(['CDI', 'CDD', 'Freelance']),
         ];
