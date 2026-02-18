@@ -24,7 +24,6 @@ final class ProjectController extends AbstractController
         $projects = $this->projectRepository->findActive();
 
         return $this->render('project/index.html.twig', [
-            'controller_name' => 'ProjectController',
             'projects' => $projects,
         ]);
     }
@@ -79,7 +78,7 @@ final class ProjectController extends AbstractController
             $this->manager->persist($project);
             $this->manager->flush();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_project', ['id' => $project->getId()]);
         }
 
         return $this->render('project/new.html.twig', [
