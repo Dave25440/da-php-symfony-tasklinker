@@ -6,6 +6,7 @@ use App\Enum\TaskStatus;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -15,15 +16,20 @@ class Task
     #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
+    #[Assert\Length(min: 10)]
+    #[Assert\NotBlank()]
     #[ORM\Column(name: 'title', length: 255)]
     private ?string $title = null;
 
+    #[Assert\Length(min: 20)]
     #[ORM\Column(name: 'description', length: 255, type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[Assert\GreaterThanOrEqual('today')]
     #[ORM\Column(name: 'deadline', type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $deadline = null;
 
+    #[Assert\NotBlank()]
     #[ORM\Column(name: 'status', length: 255)]
     private ?TaskStatus $status = null;
 
@@ -31,6 +37,7 @@ class Task
     #[ORM\JoinColumn(name: 'employee_id')]
     private ?Employee $employee = null;
 
+    #[Assert\NotNull()]
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(name: 'project_id', nullable: false)]
     private ?Project $project = null;
