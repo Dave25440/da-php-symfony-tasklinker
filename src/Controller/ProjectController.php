@@ -85,6 +85,8 @@ final class ProjectController extends AbstractController
 
         return $this->render('project/new.html.twig', [
             'form' => $form,
+            'project' => $project,
+            'edit' => $project->getId() !== null,
         ]);
     }
 

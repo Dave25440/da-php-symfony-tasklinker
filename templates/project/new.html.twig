@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau projet{% endblock %}
+{% block title %}
+{{ edit ? project.title : 'Nouveau projet' }}
+{% endblock %}
 
 {% block body %}
 {{ form_start(form) }}
     <div>{{ form_row(form.title) }}</div>
     <div>{{ form_row(form.employees) }}</div>
     <br>
-    <button type="submit" class="button button-submit">Continuer</button>
+    <button type="submit" class="button button-submit">
+        {{ edit ? 'Modifier' : 'Continuer' }}
+    </button>
 {{ form_end(form) }}
 {% endblock %}
