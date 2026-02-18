@@ -34,7 +34,7 @@ final class ProjectFactory extends PersistentObjectFactory{
      */
     #[\Override]    protected function defaults(): array|callable    {
         return [
-            'archive' => self::faker()->boolean(1.0),
+            'archive' => self::faker()->boolean(100),
             'title' => self::faker()->unique()->sentence(),
         ];
     }
