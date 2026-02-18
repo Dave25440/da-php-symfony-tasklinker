@@ -41,7 +41,9 @@
                 <header>
                     <div id="current-user"></div>
                     <div id="title-page">
+                        {% block header %}
                         <h1>{{ block('title') }}</h1>
+                        {% endblock %}
                     </div>
                 </header>
                 <div id="content">
