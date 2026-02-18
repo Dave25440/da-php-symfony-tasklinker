@@ -33,6 +33,10 @@ final class ProjectController extends AbstractController
     #[Route('/project/{id}/edit', name: 'app_project_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function new(?Project $project, Request $request): Response
     {
+        if (!$project && $request->attributes->get('id')) {
+            throw $this->createNotFoundException('Projet introuvable.');
+        }
+
         $project ??= new Project();
         $form = $this->createForm(ProjectType::class, $project);
 
@@ -54,7 +58,7 @@ final class ProjectController extends AbstractController
     public function archive(?Project $project): Response
     {
         if (!$project) {
-            return $this->redirectToRoute('app_home');
+            throw $this->createNotFoundException('Projet introuvable');
         }
 
         $project->setArchive(false);
