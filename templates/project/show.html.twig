@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ project.title }}{% endblock %}
+
+{% block header %}
+<div class="flex-header">
+    <h1>{{ project.title }}</h1>
+    <div class="user-list">
+    {% for employee in project.employees %}
+        <div class="avatar">{{ employee.firstname|slice(0,1)|upper ~ employee.lastname|slice(0,1)|upper }}</div>
+    {% endfor %}
+    </div>
+    <a class="button" href="{{ path('app_project_edit', {id: project.id}) }}">Modifier</a>
+</div>
+{% endblock %}
+
+{% block body %}
+<div id="tasks-container">
+    <div class="task-column">
+        <h2>À faire</h2>
+        <div class="tasks-list">
+        {% for task in project.tasks %}
+            {% if task.status.value == 'to_do' %}
+            <a class="task" href="#">
+                <h3>{{ task.title }}</h3>
+                {% if task.description %}
+                <p>{{ task.description }}</p>
+                {% endif %}
+                <div class="task-infos">
+                    {% if task.deadline %}
+                    <div class="task-deadline">
+                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                    </div>
+                    {% endif %}
+                    {% if task.employee %}
+                    <div class="mini-user">
+                        {{ task.employee.firstname|slice(0,1)|upper ~ task.employee.lastname|slice(0,1)|upper }}
+                    </div>
+                    {% endif %}
+                </div>
+            </a>
+            {% endif %}
+        {% endfor %}
+            <a href="#" class="task-add">+ Ajouter une tâche</a>
+        </div>
+    </div>
+    <div class="task-column">
+        <h2>En cours</h2>
+        <div class="tasks-list">
+        {% for task in project.tasks %}
+            {% if task.status.value == 'doing' %}
+            <a class="task" href="#">
+                <h3>{{ task.title }}</h3>
+                {% if task.description %}
+                <p>{{ task.description }}</p>
+                {% endif %}
+                <div class="task-infos">
+                    {% if task.deadline %}
+                    <div class="task-deadline">
+                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                    </div>
+                    {% endif %}
+                    {% if task.employee %}
+                    <div class="mini-user">
+                        {{ task.employee.firstname|slice(0,1)|upper ~ task.employee.lastname|slice(0,1)|upper }}
+                    </div>
+                    {% endif %}
+                </div
+            </a>
+            {% endif %}
+        {% endfor %}
+            <a href="#" class="task-add">+ Ajouter une tâche</a>
+        </div>
+    </div>
+    <div class="task-column">
+        <h2>Terminé</h2>
+        <div class="tasks-list">
+        {% for task in project.tasks %}
+            {% if task.status.value == 'done' %}
+            <a class="task" href="#">
+                <h3>{{ task.title }}</h3>
+                {% if task.description %}
+                <p>{{ task.description }}</p>
+                {% endif %}
+                <div class="task-infos">
+                    {% if task.deadline %}
+                    <div class="task-deadline">
+                        <i class="fa-regular fa-calendar"></i>
+                        {{ task.deadline|date('d/m/Y') }}
+                    </div>
+                    {% endif %}
+                    {% if task.employee %}
+                    <div class="mini-user">
+                        {{ task.employee.firstname|slice(0,1)|upper ~ task.employee.lastname|slice(0,1)|upper }}
+                    </div>
+                    {% endif %}
+                </div
+            </a>
+            {% endif %}
+        {% endfor %}
+            <a href="#" class="task-add">+ Ajouter une tâche</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
