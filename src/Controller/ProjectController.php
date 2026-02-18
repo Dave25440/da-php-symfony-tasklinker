@@ -19,7 +19,7 @@ final class ProjectController extends AbstractController
     #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(): Response
     {
-        $projects = $this->projectRepository->findAll();
+        $projects = $this->projectRepository->findActive();
 
         return $this->render('project/index.html.twig', [
             'controller_name' => 'ProjectController',
