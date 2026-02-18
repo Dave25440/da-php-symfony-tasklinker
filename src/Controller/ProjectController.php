@@ -29,6 +29,18 @@ final class ProjectController extends AbstractController
         ]);
     }
 
+    #[Route('/project/{id}', name: 'app_project', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function show(?Project $project): Response
+    {
+        if (!$project) {
+            throw $this->createNotFoundException('Projet introuvable.');
+        }
+
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+        ]);
+    }
+
     #[Route('/project/new', name: 'app_project_new', methods: ['GET', 'POST'])]
     #[Route('/project/{id}/edit', name: 'app_project_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function new(?Project $project, Request $request): Response
@@ -58,7 +70,7 @@ final class ProjectController extends AbstractController
     public function archive(?Project $project): Response
     {
         if (!$project) {
-            throw $this->createNotFoundException('Projet introuvable');
+            throw $this->createNotFoundException('Projet introuvable.');
         }
 
         $project->setArchive(false);
