@@ -8,8 +8,8 @@ use App\Enum\TaskStatus;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,12 +32,12 @@ class TaskType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
             ])
-            ->add('status', ChoiceType::class, [
+            ->add('status', EnumType::class, [
                 'label' => 'Statut',
-                'choices' => array_combine(
-                    array_map(fn($case) => $case->getLabel(), TaskStatus::cases()),
-                    array_map(fn($case) => $case->value, TaskStatus::cases())
-                ),
+                'class' => TaskStatus::class,
+                'choice_label' => function (TaskStatus $case) {
+                    return $case->getLabel();
+                },
             ])
             ->add('employee', EntityType::class, [
                 'label' => 'Membre',
