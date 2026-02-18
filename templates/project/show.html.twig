@@ -19,27 +19,8 @@
     <div class="task-column">
         <h2>À faire</h2>
         <div class="tasks-list">
-        {% for task in project.tasks %}
-            {% if task.status.value == 'to_do' %}
-            <a class="task" href="#">
-                <h3>{{ task.title }}</h3>
-                {% if task.description %}
-                <p>{{ task.description }}</p>
-                {% endif %}
-                <div class="task-infos">
-                    {% if task.deadline %}
-                    <div class="task-deadline">
-                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
-                    </div>
-                    {% endif %}
-                    {% if task.employee %}
-                    <div class="mini-user">
-                        {{ task.employee.firstname|slice(0,1)|upper ~ task.employee.lastname|slice(0,1)|upper }}
-                    </div>
-                    {% endif %}
-                </div>
-            </a>
-            {% endif %}
+        {% for task in tasksToDo %}
+            {% include 'task/item.html.twig' with { task: task } %}
         {% endfor %}
             <a href="#" class="task-add">+ Ajouter une tâche</a>
         </div>
@@ -47,27 +28,8 @@
     <div class="task-column">
         <h2>En cours</h2>
         <div class="tasks-list">
-        {% for task in project.tasks %}
-            {% if task.status.value == 'doing' %}
-            <a class="task" href="#">
-                <h3>{{ task.title }}</h3>
-                {% if task.description %}
-                <p>{{ task.description }}</p>
-                {% endif %}
-                <div class="task-infos">
-                    {% if task.deadline %}
-                    <div class="task-deadline">
-                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
-                    </div>
-                    {% endif %}
-                    {% if task.employee %}
-                    <div class="mini-user">
-                        {{ task.employee.firstname|slice(0,1)|upper ~ task.employee.lastname|slice(0,1)|upper }}
-                    </div>
-                    {% endif %}
-                </div
-            </a>
-            {% endif %}
+        {% for task in tasksDoing %}
+            {% include 'task/item.html.twig' with { task: task } %}
         {% endfor %}
             <a href="#" class="task-add">+ Ajouter une tâche</a>
         </div>
@@ -75,28 +37,8 @@
     <div class="task-column">
         <h2>Terminé</h2>
         <div class="tasks-list">
-        {% for task in project.tasks %}
-            {% if task.status.value == 'done' %}
-            <a class="task" href="#">
-                <h3>{{ task.title }}</h3>
-                {% if task.description %}
-                <p>{{ task.description }}</p>
-                {% endif %}
-                <div class="task-infos">
-                    {% if task.deadline %}
-                    <div class="task-deadline">
-                        <i class="fa-regular fa-calendar"></i>
-                        {{ task.deadline|date('d/m/Y') }}
-                    </div>
-                    {% endif %}
-                    {% if task.employee %}
-                    <div class="mini-user">
-                        {{ task.employee.firstname|slice(0,1)|upper ~ task.employee.lastname|slice(0,1)|upper }}
-                    </div>
-                    {% endif %}
-                </div
-            </a>
-            {% endif %}
+        {% for task in tasksDone %}
+            {% include 'task/item.html.twig' with { task: task } %}
         {% endfor %}
             <a href="#" class="task-add">+ Ajouter une tâche</a>
         </div>
