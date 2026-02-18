@@ -30,9 +30,10 @@ final class ProjectController extends AbstractController
     }
 
     #[Route('/project/new', name: 'app_project_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    #[Route('/project/{id}/edit', name: 'app_project_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function new(?Project $project, Request $request): Response
     {
-        $project = new Project();
+        $project ??= new Project();
         $form = $this->createForm(ProjectType::class, $project);
 
         $form->handleRequest($request);
