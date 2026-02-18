@@ -26,4 +26,17 @@ final class ProjectController extends AbstractController
             'projects' => $projects,
         ]);
     }
+
+    #[Route('/project/{id}/archive', name: 'app_project_archive', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function archive(?Project $project): Response
+    {
+        if (!$project) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $project->setArchive(false);
+        $this->manager->flush();
+
+        return $this->redirectToRoute('app_home');
+    }
 }
