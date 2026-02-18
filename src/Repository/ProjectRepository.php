@@ -26,6 +26,18 @@ class ProjectRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findActiveOne(int $id): ?Project
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :id')
+            ->andWhere('p.archive = :active')
+            ->setParameter('id', $id)
+            ->setParameter('active', true)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Project[] Returns an array of Project objects
 //     */
