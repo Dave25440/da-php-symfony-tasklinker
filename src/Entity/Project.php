@@ -6,6 +6,7 @@ use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -15,11 +16,13 @@ class Project
     #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
+    #[Assert\Length(min: 10)]
+    #[Assert\NotBlank()]
     #[ORM\Column(name: 'title', length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(name: 'archive')]
-    private ?bool $archive = null;
+    #[ORM\Column(name: 'archive', options: ['default' => true])]
+    private ?bool $archive = true;
 
     /**
      * @var Collection<int, Employee>
