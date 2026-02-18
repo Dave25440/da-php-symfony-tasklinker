@@ -1,4 +1,4 @@
-<a class="task" href="#">
+<a class="task" href="{{ path('app_task', {project: task.project.id, id: task.id}) }}">
     <h3>{{ task.title }}</h3>
     {% if task.description %}
     <p>{{ task.description }}</p>
