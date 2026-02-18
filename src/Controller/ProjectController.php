@@ -36,8 +36,29 @@ final class ProjectController extends AbstractController
             throw $this->createNotFoundException('Projet introuvable.');
         }
 
+        $tasksToDo = [];
+        $tasksDoing = [];
+        $tasksDone = [];
+
+        foreach ($project->getTasks() as $task) {
+            switch ($task->getStatus()->value) {
+                case 'to_do':
+                    $tasksToDo[] = $task;
+                    break;
+                case 'doing':
+                    $tasksDoing[] = $task;
+                    break;
+                case 'done':
+                    $tasksDone[] = $task;
+                    break;
+            }
+        }
+
         return $this->render('project/show.html.twig', [
             'project' => $project,
+            'tasksToDo' => $tasksToDo,
+            'tasksDoing' => $tasksDoing,
+            'tasksDone' => $tasksDone,
         ]);
     }
 
