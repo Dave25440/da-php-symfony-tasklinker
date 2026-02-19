@@ -7,7 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[UniqueEntity(fields: 'email', message: 'Cette adresse email est déjà utilisée.')]
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
 class Employee
 {
@@ -16,18 +19,28 @@ class Employee
     #[ORM\Column(name: 'id')]
     private ?int $id = null;
 
+    #[Assert\Length(min: 2)]
+    #[Assert\NotBlank()]
     #[ORM\Column(name: 'lastname', length: 255)]
     private ?string $lastname = null;
 
+    #[Assert\Length(min: 2)]
+    #[Assert\NotBlank()]
     #[ORM\Column(name: 'firstname', length: 255)]
     private ?string $firstname = null;
 
-    #[ORM\Column(name: 'email', length: 255)]
+    #[Assert\Email()]
+    #[Assert\NotBlank()]
+    #[ORM\Column(name: 'email', length: 255, unique: true)]
     private ?string $email = null;
 
+    #[Assert\LessThanOrEqual('today')]
+    #[Assert\NotBlank()]
     #[ORM\Column(name: 'start', type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $start = null;
 
+    #[Assert\Length(max: 20)]
+    #[Assert\NotBlank()]
     #[ORM\Column(name: 'status', length: 255)]
     private ?string $status = null;
 
