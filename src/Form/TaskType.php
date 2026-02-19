@@ -18,6 +18,13 @@ class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $task = $options['data'] ?? null;
+        $employees = [];
+
+        if ($task && $task->getProject()) {
+            $employees = $task->getProject()->getEmployees();
+        }
+
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre de la tâche',
@@ -42,6 +49,7 @@ class TaskType extends AbstractType
             ->add('employee', EntityType::class, [
                 'label' => 'Membre',
                 'class' => Employee::class,
+                'choices' => $employees,
                 'choice_label' => function (Employee $employee) {
                     return $employee->getFirstname() . ' ' . $employee->getLastname();
                 },
