@@ -61,4 +61,19 @@ final class TaskController extends AbstractController
             'new' => true,
         ]);
     }
+
+    #[Route('/project/{project}/task/{id}/delete', name: 'app_task_delete', requirements: ['project' => '\d+', 'id' => '\d+'], methods: ['GET', 'DELETE'])]
+    public function delete(?Task $task, Project $project): Response
+    {
+        if (!$task) {
+            throw $this->createNotFoundException('Tâche introuvable.');
+        } elseif ($task->getProject()->getId() !== $project->getId()) {
+            throw $this->createNotFoundException('La tâche ne correspond pas au projet.');
+        }
+
+        $this->manager->remove($task);
+        $this->manager->flush();
+
+        return $this->redirectToRoute('app_project', ['id' => $project->getId()]);
+    }
 }
