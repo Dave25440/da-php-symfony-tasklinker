@@ -34,7 +34,7 @@ class Task
     private ?TaskStatus $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(name: 'employee_id')]
+    #[ORM\JoinColumn(name: 'employee_id', onDelete: 'SET NULL')]
     private ?Employee $employee = null;
 
     #[Assert\NotNull()]
