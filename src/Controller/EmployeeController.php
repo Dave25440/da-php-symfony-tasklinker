@@ -49,4 +49,17 @@ final class EmployeeController extends AbstractController
             'employee' => $employee,
         ]);
     }
+
+    #[Route('/employee/{id}/delete', name: 'app_employee_delete', requirements: ['id' => '\d+'], methods: ['GET', 'DELETE'])]
+    public function delete(?Employee $employee): Response
+    {
+        if (!$employee) {
+            throw $this->createNotFoundException('Employé introuvable.');
+        }
+
+        $this->manager->remove($employee);
+        $this->manager->flush();
+
+        return $this->redirectToRoute('app_employee');
+    }
 }
