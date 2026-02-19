@@ -18,7 +18,7 @@
         {{ new ? 'Ajouter' : 'Modifier' }}
     </button>
     {% if not new %}
-    <a href="#" class="delete-task">Supprimer la tâche</a>
+    <a href="{{ path('app_task_delete', {project: task.project.id, id: task.id}) }}" onclick="return confirm('Voulez-vous vraiment supprimer cette tâche ?');" class="delete-task">Supprimer la tâche</a>
     {% endif %}
 {{ form_end(form) }}
 {% endblock %}
